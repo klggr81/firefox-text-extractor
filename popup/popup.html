@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Text Extractor</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="top">
+    <img src="../icons/icon.svg" alt="" width="28" height="28">
+    <div class="top-text">
+      <h1>Text Extractor</h1>
+      <p id="target" class="muted" title="">—</p>
+    </div>
+  </header>
+
+  <!-- Setup -->
+  <section id="setup" class="view">
+    <div class="seg" role="radiogroup" aria-label="What to extract">
+      <label><input type="radio" name="mode" value="page"><span>This page</span></label>
+      <label><input type="radio" name="mode" value="site"><span>Whole website</span></label>
+    </div>
+
+    <fieldset id="siteOpts" class="card">
+      <legend>Crawl</legend>
+      <div class="grid">
+        <label>Max pages<input type="number" id="maxPages" min="1" max="10000"></label>
+        <label>Max link depth<input type="number" id="maxDepth" min="0" max="50"></label>
+        <label>Scope
+          <select id="scope">
+            <option value="host">This site</option>
+            <option value="domain">Site + subdomains</option>
+            <option value="path">This folder only</option>
+          </select>
+        </label>
+        <label>Loader
+          <select id="loader">
+            <option value="fetch">Fast (raw HTML)</option>
+            <option value="render">Render JavaScript</option>
+          </select>
+        </label>
+        <label>Parallel requests<input type="number" id="concurrency" min="1" max="8"></label>
+        <label>Pause per page (ms)<input type="number" id="delay" min="0" max="60000" step="50"></label>
+      </div>
+      <label class="check"><input type="checkbox" id="respectRobots"><span>Respect robots.txt</span></label>
+      <label class="check"><input type="checkbox" id="useSitemap"><span>Also use sitemap.xml</span></label>
+      <details>
+        <summary>Exclude URLs containing…</summary>
+        <textarea id="exclude" rows="4" spellcheck="false" placeholder="One rule per line: plain text or /regex/"></textarea>
+      </details>
+    </fieldset>
+
+    <fieldset class="card">
+      <legend>Content</legend>
+      <label class="check"><input type="checkbox" id="mainOnly"><span>Main content only <small>(skip menus, header, footer, cookie banners)</small></span></label>
+      <label class="check"><input type="checkbox" id="skipHidden"><span>Skip hidden elements</span></label>
+      <label class="check"><input type="checkbox" id="includeLinks"><span>Keep links</span></label>
+      <label class="check"><input type="checkbox" id="includeImages"><span>Keep images</span></label>
+      <label class="inline" id="sortRow">Order pages
+        <select id="sort">
+          <option value="structure">By site structure</option>
+          <option value="crawl">In crawl order</option>
+        </select>
+      </label>
+      <label class="check"><input type="checkbox" id="saveAs"><span>Ask where to save the file</span></label>
+    </fieldset>
+
+    <p id="notice" class="notice" hidden></p>
+    <button id="start" class="primary">Extract to Markdown</button>
+    <p id="lastExport" class="muted small" hidden>
+      Last export: <span id="lastExportName"></span> ·
+      <button class="link" data-action="download">Download</button> ·
+      <button class="link" data-action="copy">Copy</button>
+    </p>
+  </section>
+
+  <!-- Progress -->
+  <section id="progress" class="view" hidden>
+    <div class="progress-head">
+      <strong id="progressTitle">Working…</strong>
+      <span id="elapsed" class="muted"></span>
+    </div>
+    <div class="bar"><div id="barFill"></div></div>
+    <dl class="stats">
+      <div><dt>Pages</dt><dd id="statDone">0</dd></div>
+      <div><dt>Queued</dt><dd id="statQueued">0</dd></div>
+      <div><dt>Skipped</dt><dd id="statSkipped">0</dd></div>
+      <div><dt>Errors</dt><dd id="statErrors">0</dd></div>
+    </dl>
+    <ul id="current" class="current"></ul>
+    <ol id="log" class="log"></ol>
+    <button id="stop" class="danger">Stop &amp; save what I have</button>
+  </section>
+
+  <!-- Result -->
+  <section id="result" class="view" hidden>
+    <div id="resultBox" class="result-box">
+      <strong id="resultTitle">Done</strong>
+      <p id="resultInfo" class="muted"></p>
+      <p id="resultMessage" class="notice" hidden></p>
+    </div>
+    <div class="row">
+      <button class="primary" data-action="download" id="downloadBtn">Download .md</button>
+      <button data-action="copy" id="copyBtn">Copy Markdown</button>
+    </div>
+    <ol id="resultLog" class="log"></ol>
+    <button id="again" class="secondary">New extraction</button>
+  </section>
+
+  <script src="../lib/defaults.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
