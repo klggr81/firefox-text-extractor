@@ -198,15 +198,6 @@ async function run(tabId) {
     await buildResult();
     state.status = state.cancel ? 'stopped' : 'done';
     log(`Finished: ${state.pages.length} page(s), ${state.result.words} words`);
-
-    if (state.settings.autoDownload) {
-      try {
-        await downloadResult(state.settings.saveAs);
-      } catch (e) {
-        log(`Download failed: ${e.message}`, 'error');
-        state.message = `Download failed: ${e.message}`;
-      }
-    }
   } catch (e) {
     state.status = 'error';
     state.message = e.message || String(e);

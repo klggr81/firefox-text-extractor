@@ -21,8 +21,8 @@ Text Extractor pulls the text from the page you're viewing, or crawls a whole we
   - **Site-wide text appears once:** text that repeats on at least half of the crawled pages (at least 3), such as a footer, is removed from the pages and listed once in a *Site-wide content* section at the end.
   - **Shorter page titles:** a site name shared by most titles (`Contact | My Site`) is removed from the page titles and shown once at the top.
   - **Skip hidden elements (on by default):** leaves out text that isn't visible on the page.
-- **Stop at any time:** the pages collected so far are still saved.
-- **Get the result:** the file downloads automatically. You can also download it again or copy it to the clipboard from the popup.
+- **Stop at any time:** the pages collected so far are kept for export.
+- **Get the result:** when the export is ready, download it as a `.md` file or copy it to the clipboard from the popup. Nothing is saved until you choose.
 
 ## Output structure
 

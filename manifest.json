@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Text Extractor",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Crawl a web page or an entire website and export all of its text as one structured Markdown file.",
   "icons": {
     "48": "icons/icon.svg",
